@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luizinho Churrascaria e Restaurante | Sorocaba</title>
+<meta name="theme-color" content="#17110e">
+<meta name="description" content="Churrascaria e restaurante Luizinho em Sorocaba: espetos, carnes na brasa, pratos caseiros e ambiente para toda a família.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#17110e; --carvao2:#221813; --carvao3:#2e211a;
+  --brasa:#e04a1f; --brasa2:#b93613; --mel:#f2b441; --creme:#f7efe2;
+  --texto:#e8dccb; --suave:#b3a28e; --linha:#43322a;
+  --display:'Rozha One',Georgia,serif; --corpo:'Nunito Sans',system-ui,sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:var(--corpo);background:var(--carvao);color:var(--texto);line-height:1.65;font-size:17px}
+body.trava{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mel);outline-offset:3px}
+.wrap{width:min(1140px,92%);margin-inline:auto}
+section{padding:100px 0}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;color:var(--creme)}
+h2{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
+.lead{max-width:58ch;color:var(--suave)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:999px;font-weight:800;border:2px solid transparent;cursor:pointer;transition:.25s;background:none}
+.btn-fogo{background:var(--brasa);color:#fff}
+.btn-fogo:hover{background:var(--brasa2);transform:translateY(-2px)}
+.btn-borda{border-color:var(--mel);color:var(--mel)}
+.btn-borda:hover{background:var(--mel);color:var(--carvao)}
+
+/* progresso de leitura */
+#progresso{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--brasa),var(--mel));z-index:80}
+
+/* ===== MENU ===== */
+.topo{position:fixed;top:12px;left:0;right:0;z-index:70;transition:.3s}
+.barra{width:min(1140px,94%);margin-inline:auto;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 14px 0 22px;border-radius:999px;border:1px solid transparent;transition:.3s}
+.topo.fixo .barra{background:rgba(23,17,14,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--linha);box-shadow:0 10px 34px rgba(0,0,0,.45)}
+.logo{font-family:var(--display);font-size:1.6rem;color:var(--creme);white-space:nowrap}
+.logo span{color:var(--brasa)}
+.links{display:flex;gap:4px;align-items:center}
+.links a.lk{position:relative;padding:9px 16px;border-radius:999px;font-weight:600;font-size:.96rem;color:var(--texto);transition:.2s}
+.links a.lk:hover{color:var(--creme);background:rgba(255,255,255,.07)}
+.links a.lk.ativo{color:var(--carvao);background:var(--mel)}
+.acoes-topo{display:flex;align-items:center;gap:10px}
+.mini{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;font-weight:700;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.07);white-space:nowrap}
+.mini i,.aberto i{width:9px;height:9px;border-radius:50%;background:#888;flex:none}
+.on i{background:#6fdc6f;box-shadow:0 0 10px #6fdc6f}
+.off i{background:#ff7a5c}
+.acoes-topo .btn{padding:10px 22px}
+.burger{display:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--linha);background:rgba(23,17,14,.7);cursor:pointer;position:relative}
+.burger span{position:absolute;left:13px;right:13px;height:2px;background:var(--creme);border-radius:2px;transition:.3s}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:27px}
+.burger.x span:nth-child(1){top:22px;transform:rotate(45deg)}
+.burger.x span:nth-child(2){opacity:0}
+.burger.x span:nth-child(3){top:22px;transform:rotate(-45deg)}
+.gaveta{position:fixed;inset:0;z-index:65;background:radial-gradient(ellipse at 50% 110%,#7a2a10,var(--carvao) 65%);display:flex;flex-direction:column;justify-content:center;padding:100px 8% 40px;opacity:0;visibility:hidden;transition:.35s}
+.gaveta.aberta{opacity:1;visibility:visible}
+.gaveta nav{display:grid;gap:4px}
+.gaveta nav a{font-family:var(--display);font-size:clamp(2rem,9vw,3rem);color:var(--creme);padding:6px 0;opacity:0;transform:translateY(14px);transition:.4s}
+.gaveta.aberta nav a{opacity:1;transform:none}
+.gaveta.aberta nav a:nth-child(2){transition-delay:.05s}.gaveta.aberta nav a:nth-child(3){transition-delay:.1s}
+.gaveta.aberta nav a:nth-child(4){transition-delay:.15s}.gaveta.aberta nav a:nth-child(5){transition-delay:.2s}
+.gaveta nav a.ativo{color:var(--mel)}
+.gaveta .rodape-g{margin-top:34px;display:grid;gap:12px}
+.gaveta .rodape-g .btn{width:100%}
+
+/* ===== HERO ===== */
+.hero{min-height:100svh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;padding:130px 0 70px;
+  background:radial-gradient(ellipse at 50% 120%,#a63a14 0%,#4a1a0d 40%,var(--carvao) 75%) center/cover}
+.hero.com-foto::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(23,17,14,.55),rgba(23,17,14,.88)),var(--foto) center/cover}
+#brasas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(4rem,17vw,10.5rem);text-shadow:0 6px 40px rgba(224,74,31,.5)}
+.hero .sub{font-weight:800;letter-spacing:.14em;color:var(--mel);margin-top:6px}
+.hero p.chamada{max-width:44ch;margin:20px auto 30px;font-size:1.15rem}
+.hero .acoes{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.aberto{display:inline-flex;align-items:center;gap:9px;margin-top:28px;padding:8px 18px;border-radius:999px;background:rgba(0,0,0,.45);font-weight:600;font-size:.95rem}
+.atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:54px}
+.atalho{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;cursor:pointer;border:0;text-align:left;display:flex;align-items:flex-end;padding:20px;transition:.3s;background:var(--carvao3)}
+.atalho:hover{transform:translateY(-6px)}
+.atalho:hover img{transform:scale(1.07)}
+.atalho::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(10,6,4,.9));z-index:2}
+.atalho h3{position:relative;z-index:3;font-size:clamp(1.2rem,3vw,1.8rem)}
+.atalho small{position:relative;z-index:3;display:block;color:var(--mel);font-weight:800;font-family:var(--corpo);font-size:.82rem}
+
+.faixa{background:var(--mel);color:var(--carvao);padding:16px 0;font-weight:800;overflow:hidden;white-space:nowrap}
+.faixa div{display:inline-block;animation:rola 30s linear infinite}
+.faixa span{margin:0 22px}
+@keyframes rola{to{transform:translateX(-50%)}}
+
+/* fotos com fallback */
+.foto{position:relative;overflow:hidden;background:linear-gradient(135deg,#38251b,#7a3218);display:grid;place-items:center}
+.foto::after{content:attr(data-label);position:absolute;z-index:0;padding:18px;color:rgba(255,239,220,.78);font-family:var(--display);font-size:clamp(1.3rem,3vw,2rem);text-align:center}
+.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.foto img{filter:saturate(1.08) contrast(1.03)}
+.atalho .foto{position:absolute;inset:0}
+
+/* ===== CARDÁPIO / CARROSSEL ===== */
+.cardapio{background:var(--carvao2)}
+.cab{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.abas{display:inline-flex;gap:4px;padding:5px;border-radius:999px;background:var(--carvao);border:1px solid var(--linha);margin:26px 0 30px}
+.aba{padding:10px 22px;border-radius:999px;border:0;background:none;font-weight:800;cursor:pointer;transition:.2s;color:var(--suave)}
+.aba[aria-selected="true"]{background:var(--brasa);color:#fff}
+.ctl{display:flex;gap:10px}
+.ctl button{width:48px;height:48px;border-radius:50%;border:2px solid var(--linha);background:none;font-size:1.3rem;cursor:pointer;transition:.2s}
+.ctl button:hover:not(:disabled){border-color:var(--mel);color:var(--mel)}
+.ctl button:disabled{opacity:.3;cursor:default}
+.pista{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 10px;cursor:grab}
+.pista::-webkit-scrollbar{display:none}
+.pista.arrasta{cursor:grabbing;scroll-snap-type:none}
+.prato{flex:0 0 min(300px,80%);scroll-snap-align:start;background:var(--carvao3);border-radius:22px;overflow:hidden;user-select:none}
+.prato .foto{aspect-ratio:4/3}
+.prato .txt{padding:18px 20px 22px}
+.prato h3{font-family:var(--corpo);font-weight:800;font-size:1.15rem;color:var(--creme);margin-bottom:4px}
+.prato p{font-size:.93rem;color:var(--suave);min-height:3em}
+.prato .preco{display:inline-block;margin-top:12px;background:var(--mel);color:var(--carvao);font-weight:800;padding:3px 14px;border-radius:999px;font-size:.92rem}
+.trilho{height:4px;border-radius:4px;background:var(--linha);margin-top:20px;overflow:hidden}
+.trilho i{display:block;height:100%;width:20%;background:var(--brasa);border-radius:4px;transition:.15s}
+.nota{margin-top:20px;font-size:.88rem;color:var(--suave)}
+
+/* ===== QUEM SOMOS ===== */
+.quem .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.quem .lead+.lead{margin-top:14px}
+.moldura{position:relative}
+.moldura::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:2px solid var(--brasa);border-radius:24px}
+.moldura .foto{position:relative;border-radius:24px;aspect-ratio:4/3}
+.numeros{display:flex;gap:36px;flex-wrap:wrap;margin-top:30px}
+.numeros b{display:block;font-family:var(--display);font-size:2.2rem;color:var(--mel);font-weight:400}
+.numeros span{font-size:.9rem;color:var(--suave)}
+
+/* ===== GALERIA ===== */
+.galeria{background:var(--carvao2)}
+.grade{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px}
+.grade .foto{border-radius:16px;aspect-ratio:1;cursor:default}
+.grade .foto.zoom{cursor:zoom-in}
+.grade .foto:nth-child(1){grid-column:span 2;grid-row:span 2}
+.grade .foto:hover img{transform:scale(1.06)}
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(10,6,4,.94);display:none;place-items:center;padding:24px}
+.lightbox.on{display:grid}
+.lightbox img{max-height:88vh;border-radius:14px}
+.lightbox button{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;border:0;background:var(--creme);color:var(--carvao);font-size:1.3rem;cursor:pointer}
+
+/* ===== CONTATO ===== */
+.contato .topo-c{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+form{display:grid;gap:14px;background:var(--carvao2);padding:30px;border-radius:22px}
+label{font-weight:700;font-size:.92rem;display:grid;gap:6px}
+input,select{padding:13px 14px;border-radius:10px;border:2px solid var(--linha);background:var(--carvao);color:var(--creme);font:inherit}
+input:focus,select:focus{border-color:var(--mel);outline:0}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.horarios{width:100%;border-collapse:collapse;margin:8px 0 26px}
+.horarios td{padding:10px 12px;border-bottom:1px dashed var(--linha)}
+.horarios td:last-child{text-align:right;font-weight:600;color:var(--creme)}
+.horarios tr.hoje td{background:rgba(242,180,65,.12);color:var(--mel);font-weight:800}
+.horarios tr.hoje td:first-child{border-radius:10px 0 0 10px}
+.horarios tr.hoje td:last-child{border-radius:0 10px 10px 0;color:var(--mel)}
+.dados p{margin:10px 0;color:var(--suave)}
+.dados strong{display:block;color:var(--mel)}
+.redes{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.redes a{padding:9px 18px;border-radius:999px;border:1px solid var(--linha);font-weight:700;font-size:.92rem;transition:.2s}
+.redes a:hover{border-color:var(--mel);color:var(--mel)}
+.mapa-box{margin-top:56px;position:relative}
+.mapa{width:100%;height:420px;border:0;border-radius:24px}
+.mapa-box .btn{position:absolute;right:18px;bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+
+footer{padding:36px 0 90px;text-align:center;background:#0f0b09;color:var(--suave);font-size:.92rem}
+.zap{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;background:#25d366;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.5);transition:.2s}
+.zap:hover{transform:scale(1.08)}
+.zap svg{width:30px;height:30px;fill:#fff}
+
+@media(max-width:960px){
+.links,.mini,.acoes-topo .btn{display:none}
+.burger{display:block}
+.barra{padding:0 10px 0 20px}
+section{padding:72px 0}
+.quem .wrap,.contato .topo-c{grid-template-columns:1fr;gap:50px}
+.moldura{margin-right:18px}
+.grade{grid-template-columns:repeat(2,1fr)}
+.atalhos{gap:10px}
+.atalho{padding:14px}
+.mapa{height:340px}
+.ctl{display:none}
+}
+
+@media(max-width:480px){
+.duas{grid-template-columns:1fr}
+.abas{display:flex;overflow-x:auto}
+.aba{white-space:nowrap}
+}
+
+@media(prefers-reduced-motion:reduce){
+*{animation:none!important;transition:none!important}
+html{scroll-behavior:auto}
+}
+
+/* ===== refinamento visual e responsividade ===== */
+:root{--sombra:0 24px 70px rgba(0,0,0,.34)}
+body{overflow-x:hidden}
+::selection{background:var(--mel);color:var(--carvao)}
+.hero{isolation:isolate;background:radial-gradient(ellipse at 50% 105%,#8f3517 0%,#3c190f 38%,#17110e 78%)}
+.hero.com-foto::before{z-index:-1;background:linear-gradient(180deg,rgba(17,11,8,.52),rgba(17,11,8,.82) 72%,#17110e 100%),var(--foto) center 48%/cover}
+.hero .wrap{width:min(1180px,92%)}
+.hero h1{letter-spacing:-.035em}
+.hero .sub{font-size:.82rem}
+.hero .chamada{color:#f3e8d9}
+.hero .acoes .btn{min-width:190px}
+.atalhos{gap:18px}
+.atalho{min-height:250px;box-shadow:var(--sombra);isolation:isolate}
+.atalho .foto{z-index:0}
+.atalho::before{background:linear-gradient(180deg,rgba(15,9,6,.04) 15%,rgba(15,9,6,.84) 100%)}
+.atalho h3{font-size:clamp(1.35rem,3vw,2rem)}
+.atalho small{letter-spacing:.08em;text-transform:uppercase}
+.cardapio{position:relative}
+.cardapio::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--linha),transparent)}
+.abas{max-width:100%;overflow-x:auto}
+.aba{min-height:44px}
+.prato{flex-basis:min(320px,84%);border:1px solid rgba(255,255,255,.055);box-shadow:0 14px 36px rgba(0,0,0,.18);transition:transform .28s,border-color .28s,box-shadow .28s}
+.prato:hover{transform:translateY(-5px);border-color:rgba(242,180,65,.38);box-shadow:0 22px 42px rgba(0,0,0,.28)}
+.prato .foto{aspect-ratio:4/3;background:#38251b}
+.prato .foto::before{content:"";position:absolute;inset:35% 0 0;z-index:2;background:linear-gradient(transparent,rgba(13,8,5,.16));pointer-events:none}
+.prato .txt{padding:20px 21px 23px}
+.prato h3{font-size:1.2rem}
+.prato p{min-height:3.3em}
+.preco{letter-spacing:.02em}
+.trilho{height:3px}
+.quem{overflow:hidden}
+.moldura .foto{box-shadow:var(--sombra)}
+.grade{gap:14px}
+.grade .foto{box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.grade .foto::before{content:"";position:absolute;inset:45% 0 0;z-index:2;background:linear-gradient(transparent,rgba(0,0,0,.18))}
+.dados{background:rgba(255,255,255,.025);border:1px solid var(--linha);border-radius:22px;padding:28px}
+form{border:1px solid rgba(255,255,255,.06);box-shadow:var(--sombra)}
+input,select{width:100%;min-height:48px}
+input::placeholder{color:#897968}
+.btn{min-height:48px}
+.btn:active{transform:scale(.98)}
+.mapa{box-shadow:var(--sombra)}
+.zap{width:60px;height:60px;border:3px solid rgba(255,255,255,.18)}
+.zap::before{content:"";position:absolute;inset:-7px;border:1px solid rgba(37,211,102,.45);border-radius:50%;animation:pulso 2.4s infinite}
+@keyframes pulso{0%{transform:scale(.88);opacity:.75}100%{transform:scale(1.35);opacity:0}}
+.gaveta{padding-top:120px}
+.gaveta nav a{font-size:clamp(2.1rem,8vw,3.4rem)}
+.lightbox{backdrop-filter:blur(12px)}
+.lightbox img{max-width:min(1100px,92vw);object-fit:contain;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.foto.sem-imagem{background:radial-gradient(circle at 50% 35%,#75401f,#2e211a 72%)}
+
+@media(max-width:960px){
+  .hero{min-height:auto;padding:145px 0 68px}
+  .hero h1{font-size:clamp(4.2rem,18vw,8rem)}
+  .atalhos{margin-top:42px}
+  .quem .wrap{gap:42px}
+  .dados{padding:24px}
+}
+
+@media(max-width:600px){
+  body{font-size:16px}
+  section{padding:66px 0}
+  .topo{top:8px}
+  .barra{height:58px}
+  .logo{font-size:1.45rem}
+  .hero{padding:126px 0 54px}
+  .hero .sub{max-width:28ch;margin:8px auto 0;line-height:1.6}
+  .hero .chamada{font-size:1.02rem;padding-inline:8px}
+  .hero .acoes{display:grid;grid-template-columns:1fr;width:min(100%,360px);margin-inline:auto}
+  .hero .acoes .btn{width:100%}
+  .atalhos{grid-template-columns:1fr 1fr;gap:10px;margin-top:36px}
+  .atalho{aspect-ratio:1/1.12;min-height:160px;padding:14px;border-radius:16px}
+  .atalho h3{font-size:1.2rem}
+  .atalho small{font-size:.7rem}
+  .cab{align-items:flex-start}
+  .abas{width:100%;margin:22px 0}
+  .aba{padding:9px 17px;font-size:.9rem}
+  .prato{flex-basis:84%}
+  .grade{gap:8px}
+  .grade .foto{border-radius:12px}
+  .grade .foto:nth-child(1){grid-column:span 2;grid-row:span 1;aspect-ratio:16/10}
+  .moldura::before{inset:12px -10px -12px 12px}
+  .numeros{gap:22px}
+  .numeros b{font-size:1.9rem}
+  .contato .topo-c{gap:36px}
+  form{padding:20px}
+  .dados{padding:20px}
+  .mapa-box{margin-top:38px}
+  .mapa{height:300px}
+  .mapa-box .btn{right:12px;bottom:12px;padding:11px 18px}
+  .zap{width:54px;height:54px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+  footer{padding-bottom:100px}
+}
+
+@media(hover:none){
+  .prato:hover,.atalho:hover{transform:none}
+}
+
+/* Brasas concentradas sob a carne no banner principal */
+.hero::after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:-2px;height:34%;pointer-events:none;background:radial-gradient(ellipse at 22% 100%,rgba(255,91,20,.42),transparent 38%),radial-gradient(ellipse at 76% 100%,rgba(255,145,35,.34),transparent 34%),linear-gradient(0deg,rgba(7,4,3,.55),transparent 80%);mix-blend-mode:screen;animation:brasa-pulso 4.5s ease-in-out infinite alternate}
+#brasas{z-index:1;opacity:.9}
+.hero .wrap{z-index:2}
+@keyframes brasa-pulso{from{opacity:.55;filter:brightness(.85)}to{opacity:1;filter:brightness(1.25)}}
+
+/* Seção de experiência: conteúdo útil, sem frase de efeito */
+.experiencia{background:linear-gradient(135deg,#241811 0%,#17110e 65%);text-align:center;position:relative;overflow:hidden}
+.experiencia::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(224,74,31,.14),transparent 58%)}
+.experiencia .wrap{position:relative}
+.experiencia-cab{max-width:720px;margin:0 auto 42px}
+.eyebrow{display:inline-block;color:var(--mel);font-size:.78rem;font-weight:800;letter-spacing:.16em;margin-bottom:14px}
+.experiencia-cab h2{margin-bottom:14px}
+.experiencia-cab .lead{margin-inline:auto}
+.experiencia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 34px;text-align:left}
+.experiencia-item{padding:28px;border:1px solid rgba(242,180,65,.2);border-radius:18px;background:rgba(255,255,255,.035);min-height:190px;transition:transform .25s,border-color .25s,background .25s}
+.experiencia-item:hover{transform:translateY(-5px);border-color:rgba(242,180,65,.55);background:rgba(255,255,255,.06)}
+.experiencia-num{display:block;color:var(--brasa);font-family:var(--display);font-size:1.7rem;margin-bottom:14px}
+.experiencia-item h3{font-family:var(--corpo);font-size:1.08rem;font-weight:800;margin-bottom:8px}
+.experiencia-item p{color:var(--suave);font-size:.94rem;line-height:1.6}
+.foto.sem-imagem::after{content:attr(data-label);font-size:1rem;opacity:.85}
+@media(max-width:760px){
+  .experiencia-grid{grid-template-columns:1fr}
+  .experiencia-item{min-height:0;padding:22px}
+  .hero::after{height:26%}
+}
+
+</style>
+</head>
+<body>
+
+<div id="progresso"></div>
+
+<header class="topo" id="topo">
+  <div class="barra">
+    <a href="#inicio" class="logo">Luizinho<span>.</span></a>
+
+    <nav class="links" aria-label="Principal">
+      <a class="lk" href="#inicio" data-sec="inicio">Início</a>
+      <a class="lk" href="#cardapio" data-sec="cardapio">Cardápio</a>
+      <a class="lk" href="#quem-somos" data-sec="quem-somos">Quem somos</a>
+      <a class="lk" href="#galeria" data-sec="galeria">Galeria</a>
+      <a class="lk" href="#contato" data-sec="contato">Contato</a>
+    </nav>
+
+    <div class="acoes-topo">
+      <span class="mini off" data-status><i></i><span>…</span></span>
+      <a href="#contato" class="btn btn-fogo">Reservar</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="gaveta" id="gaveta" aria-hidden="true">
+  <nav aria-label="Menu mobile">
+    <a href="#inicio" data-sec="inicio">Início</a>
+    <a href="#cardapio" data-sec="cardapio">Cardápio</a>
+    <a href="#quem-somos" data-sec="quem-somos">Quem somos</a>
+    <a href="#galeria" data-sec="galeria">Galeria</a>
+    <a href="#contato" data-sec="contato">Contato</a>
+  </nav>
+
+  <div class="rodape-g">
+    <span class="mini off" data-status style="justify-self:start"><i></i><span>…</span></span>
+    <a class="btn btn-fogo" href="#contato">Reservar mesa</a>
+    <a class="btn btn-borda" data-ligar>Ligar agora</a>
+  </div>
+</div>
+
+<main>
+
+<section class="hero" id="inicio">
+  <canvas id="brasas" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <h1>Luizinho</h1>
+    <div class="sub">CHURRASCARIA E RESTAURANTE · SOROCABA</div>
+
+    <p class="chamada">Cortes suculentos, aquele sabor inconfundível da brasa e bons momentos ao redor da mesa.</p>
+
+    <div class="acoes">
+      <a href="#contato" class="btn btn-fogo">Reservar minha mesa</a>
+      <a href="#cardapio" class="btn btn-borda">Ver cardápio</a>
+    </div>
+
+    <div class="aberto off" data-status><i></i><span>Verificando horário…</span></div>
+    <div class="atalhos" id="atalhos"></div>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true"><div id="faixa"></div></div>
+
+<section class="cardapio" id="cardapio">
+  <div class="wrap">
+    <div class="cab">
+      <div>
+        <h2>Cardápio</h2>
+        <p class="lead">Conheça algumas sugestões da casa. Consulte a equipe sobre disponibilidade e pratos do dia.</p>
+      </div>
+
+      <div class="ctl">
+        <button id="ant" aria-label="Anterior">‹</button>
+        <button id="prox" aria-label="Próximo">›</button>
+      </div>
+    </div>
+
+    <div class="abas" role="tablist" id="abas">
+      <button class="aba" role="tab" data-cat="pratos" aria-selected="true">Pratos</button>
+      <button class="aba" role="tab" data-cat="bebidas" aria-selected="false">Bebidas</button>
+      <button class="aba" role="tab" data-cat="sobremesas" aria-selected="false">Sobremesas</button>
+    </div>
+
+    <div class="pista" id="pista" tabindex="0" aria-label="Opções do cardápio"></div>
+
+    <div class="trilho"><i id="barra-pista"></i></div>
+
+    <p class="nota">* Fotos ilustrativas e preços fictícios para demonstração. Consulte o restaurante para confirmar os valores e a disponibilidade.</p>
+  </div>
+</section>
+
+<section class="quem" id="quem-somos">
+  <div class="wrap">
+    <div>
+      <h2>Quem somos</h2>
+
+      <p class="lead">O Luizinho é um ambiente acolhedor e descontraído, feito para reunir amigos e família em volta de uma boa mesa em Sorocaba.</p>
+
+      <p class="lead">Nossos espetos, carnes, porções e sobremesas são preparados com ingredientes de qualidade e servidos com carinho, com bebida na temperatura certa para cada paladar.</p>
+
+      <div class="numeros">
+        <div><b>2016</b><span>desde o início da nossa história</span></div>
+        <div><b>Qualidade</b><span>em cada refeição</span></div>
+      </div>
+    </div>
+
+    <div class="moldura">
+      <div class="foto" id="foto-sobre" data-label="Ambiente Luizinho"></div>
+    </div>
+  </div>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="wrap">
+    <h2>Galeria</h2>
+    <p class="lead">Fotos ilustrativas de carnes na brasa, bons acompanhamentos e da experiência de uma boa mesa.</p>
+    <div class="grade" id="grade"></div>
+  </div>
+</section>
+
+<section class="experiencia" aria-labelledby="experiencia-titulo">
+  <div class="wrap">
+    <div class="experiencia-cab">
+      <span class="eyebrow">TRADIÇÃO E QUALIDADE DESDE 2016</span>
+      <h2 id="experiencia-titulo">Seu almoço merece ser especial.</h2>
+      <p class="lead">Mais do que uma refeição, uma pausa para aproveitar bons sabores, comida bem preparada e atendimento acolhedor.</p>
+    </div>
+
+    <div class="experiencia-grid">
+      <article class="experiencia-item">
+        <span class="experiencia-num">01</span>
+        <h3>Sabor de verdade</h3>
+        <p>Churrasco e acompanhamentos preparados para valorizar cada refeição.</p>
+      </article>
+
+      <article class="experiencia-item">
+        <span class="experiencia-num">02</span>
+        <h3>Variedade à mesa</h3>
+        <p>Opções para diferentes gostos, do churrasco aos acompanhamentos.</p>
+      </article>
+
+      <article class="experiencia-item">
+        <span class="experiencia-num">03</span>
+        <h3>Uma pausa bem aproveitada</h3>
+        <p>Um ambiente para reunir pessoas e aproveitar o momento com tranquilidade.</p>
+      </article>
+    </div>
+
+    <a href="#contato" class="btn btn-fogo">Venha conhecer</a>
+  </div>
+</section>
+
+<section class="contato" id="contato">
+  <div class="wrap">
+    <div class="topo-c">
+      <div>
+        <h2>Reserve sua mesa</h2>
+
+        <p class="lead" style="margin-bottom:22px">Preencha e enviamos o pedido direto para o WhatsApp do restaurante.</p>
+
+        <form id="form">
+          <label>
+            Seu nome
+            <input type="text" id="nome" required placeholder="Como podemos te chamar?">
+          </label>
+
+          <div class="duas">
+            <label>
+              Data
+              <input type="date" id="data" required>
+            </label>
+
+            <label>
+              Horário
+              <select id="hora"></select>
+            </label>
+          </div>
+
+          <label>
+            Número de pessoas
+            <input type="number" id="pessoas" min="1" max="60" value="4" required>
+          </label>
+
+          <label>
+            Observações (opcional)
+            <input type="text" id="obs" placeholder="Aniversário, cadeirinha de bebê…">
+          </label>
+
+          <button type="submit" class="btn btn-fogo">Enviar pelo WhatsApp</button>
+        </form>
+      </div>
+
+      <div class="dados">
+        <h2 style="font-size:2rem">Horários</h2>
+        <table class="horarios" id="horarios"></table>
+
+        <p><strong>Endereço</strong><span id="end-texto"></span></p>
+        <p><strong>Telefone</strong><span id="tel-texto"></span></p>
+        <p><strong>E-mail</strong><span id="mail-texto"></span></p>
+
+        <div class="redes" id="redes"></div>
+      </div>
+    </div>
+
+    <div class="mapa-box">
+      <iframe class="mapa" id="mapa" title="Mapa com a localização do Luizinho Restaurante Grill" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <a class="btn btn-fogo" id="btn-rota" target="_blank" rel="noopener">Traçar rota</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--creme)">Luizinho Churrascaria e Restaurante</strong> · Sorocaba, SP</p>
+    <p>© <span id="ano"></span> Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Foto ampliada">
+  <button aria-label="Fechar">✕</button>
+  <img alt="">
+</div>
+
+<a class="zap" id="zap" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32">
+    <path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.3.7 4.5 1.9 6.3L4 29l8-2.1a12 12 0 0 0 4 .7c6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.7c-1.3 0-2.6-.3-3.7-.9l-.5-.3-4.700 1.200 1.300-4.500-.3-.5a9.700 9.700 0 0 1-1.500-5.200C6.600 9.500 10.800 5.400 16 5.400s9.400 4.100 9.400 9.500-4.200 9.800-9.400 9.800zm5.200-7.300c-.3-.1-1.700-.8-1.900-.9-.3-.1-.5-.1-.7.1l-.9 1.100c-.2.200-.3.200-.6.100-1.700-.8-2.800-1.500-3.900-3.400-.3-.5.3-.5.800-1.500.1-.2 0-.4 0-.5l-.9-2.100c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.1.200 2.100 3.300 5.200 4.600 1.900.8 2.700.9 3.600.7.600-.1 1.700-.7 2-1.400.2-.7.200-1.200.2-1.400-.1-.1-.3-.2-.6-.3z"/>
+  </svg>
+</a>
+<script>
+
+/* ================= CONFIGURAÇÕES: EDITE AQUI ================= */
+
+const CONFIG = {
+
+  whatsapp: "5515988381489",
+  telefone: "(15) 98838-1489",
+
+  email: "contato@luisinho.com.br",
+
+  endereco: "R. Dr. Américo Figueiredo, 518 - Jardim Simus, Sorocaba - SP, 18055-131",
+
+  instagram: "https://www.instagram.com/",
+  facebook: "https://www.facebook.com/",
+
+  /* 0=domingo ... 6=sábado
+     [abre, fecha] em horas
+     null = fechado */
+
+  horarios: {
+    0:[11.5,16],
+    1:null,
+    2:[11.5,23],
+    3:[11.5,23],
+    4:[11.5,23],
+    5:[11.5,24],
+    6:[11.5,24]
+  },
+
+  /* FOTOS: imagens ilustrativas externas.
+     Troque por fotos reais da casa antes de publicar. */
+
+  fotoHero: "https://images.unsplash.com/photo-1592134073632-f38ffeef9ebd?auto=format&fit=crop&w=2000&q=90",
+
+  fotoSobre: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85",
+
+  fallbackFotos: {
+
+    pratos: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1000&q=80",
+
+    bebidas: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=1000&q=80",
+
+    sobremesas: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1000&q=80"
+
+  },
+
+  fotosAtalhos: {
+
+    pratos:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1400&q=85",
+
+    bebidas:"https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=1000&q=85",
+
+    sobremesas:"https://images.unsplash.com/photo-1551024506-0cc6f6e2e5b3?auto=format&fit=crop&w=1000&q=85"
+
+  },
+
+  galeria: [
+
+    "https://images.unsplash.com/photo-1592134073632-f38ffeef9ebd?auto=format&fit=crop&w=1400&q=85",
+
+    "https://www.foodrepublic.com/img/gallery/the-one-rule-to-remember-when-cooking-picanha-steak-the-brazilian-way/l-intro-1740656658.jpg",
+
+    "https://images.pexels.com/photos/31927206/pexels-photo-31927206.jpeg?auto=compress&cs=tinysrgb&w=1200",
+
+    "https://images.unsplash.com/photo-1600797828610-468bb21b6f8e?auto=format&fit=crop&w=1200&q=85",
+
+    "https://flipdish-web.imgix.net/fd30860/c2f2fac24fc9409b67ab122abe5226f9.png?ar=3%3A2&crop=entropy&fit=crop&w=1200",
+
+    "https://images.unsplash.com/photo-1702728117204-9f178761b2dd?auto=format&fit=crop&w=1200&q=85",
+
+    "https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=1200&q=85",
+
+    "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
+
+    "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1200&q=85"
+
+  ],
+
+  cardapio: {
+
+    pratos: [
+
+      {
+        n:"Picanha na brasa",
+        d:"Capa dourada, sal grosso e ponto certo.",
+        p:"R$ 89,90",
+        f:"https://www.foodrepublic.com/img/gallery/the-one-rule-to-remember-when-cooking-picanha-steak-the-brazilian-way/l-intro-1740656658.jpg"
+      },
+
+      {
+        n:"Costela assada",
+        d:"Assada lentamente até ficar macia e suculenta.",
+        p:"R$ 69,90",
+        f:"https://images.pexels.com/photos/31927206/pexels-photo-31927206.jpeg?auto=compress&cs=tinysrgb&w=1200"
+      },
+
+      {
+        n:"Fraldinha",
+        d:"Corte macio, sabor marcante e grelha bem quente.",
+        p:"R$ 74,90",
+        f:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1200&q=85"
+      },
+
+      {
+        n:"Cupim",
+        d:"Fatiado na hora, com textura macia e dourada.",
+        p:"R$ 72,90",
+        f:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85"
+      },
+
+      {
+        n:"Linguiça artesanal",
+        d:"Dourada na grelha, com tempero e suculência.",
+        p:"R$ 39,90",
+        f:"https://images.unsplash.com/photo-1600797828610-468bb21b6f8e?auto=format&fit=crop&w=1200&q=85"
+      },
+
+      {
+        n:"Frango na brasa",
+        d:"Bem dourado por fora e macio por dentro.",
+        p:"R$ 44,90",
+        f:"https://flipdish-web.imgix.net/fd30860/c2f2fac24fc9409b67ab122abe5226f9.png?ar=3%3A2&crop=entropy&fit=crop&w=1200"
+      },
+
+      {
+        n:"Rodízio completo",
+        d:"Uma seleção de carnes e acompanhamentos para aproveitar à mesa.",
+        p:"R$ 89,90",
+        f:"https://images.unsplash.com/photo-1592134073632-f38ffeef9ebd?auto=format&fit=crop&w=1200&q=85"
+      }
+
+    ],
+
+    bebidas: [
+
+      {
+        n:"Cerveja gelada",
+        d:"Para acompanhar seu almoço ou churrasco.",
+        p:"R$ 12,90",
+        f:"https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Chopp",
+        d:"Servido bem gelado para brindar bons momentos.",
+        p:"R$ 10,90",
+        f:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Caipirinha",
+        d:"Um clássico refrescante para acompanhar a refeição.",
+        p:"R$ 22,90",
+        f:"https://images.unsplash.com/photo-1536935338788846bb9981813?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Sucos naturais",
+        d:"Opções refrescantes para todos os gostos.",
+        p:"R$ 9,90",
+        f:"https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Refrigerantes",
+        d:"Opções individuais e para compartilhar.",
+        p:"R$ 7,90",
+        f:"https://images.unsplash.com/photo-1543255006-d6395b6f1171?auto=format&fit=crop&w=1000&q=85"
+      }
+
+    ],
+
+    sobremesas: [
+
+      {
+        n:"Pudim de leite",
+        d:"Cremoso, com uma generosa calda de caramelo.",
+        p:"R$ 12,90",
+        f:"https://images.unsplash.com/photo-1702728117204-9f178761b2dd?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Mousse de maracujá",
+        d:"Leve, cremosa e com toque cítrico.",
+        p:"R$ 11,90",
+        f:"https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Doce de leite com queijo",
+        d:"Uma combinação clássica para fechar a refeição.",
+        p:"R$ 16,90",
+        f:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1000&q=85"
+      },
+
+      {
+        n:"Abacaxi na brasa",
+        d:"Finalização leve com o sabor especial da grelha.",
+        p:"R$ 14,90",
+        f:"https://images.unsplash.com/photo-1551024506-0cc6f6e2e5b3?auto=format&fit=crop&w=1000&q=85"
+      }
+
+    ]
+
+  }
+
+};
+
+/* ============================================================== */
+
+const $ = (s,r=document)=>r.querySelector(s),
+      $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+
+const DIAS = [
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado'
+];
+
+const fmt = n => {
+  n=n%24;
+  const h=Math.floor(n), m=Math.round((n-h)*60);
+  return h+'h'+(m?String(m).padStart(2,'0'):'');
+};
+
+/* foto com fallback */
+
+function criaFoto(src,rotulo,alt,fallbackSrc){
+
+  const d = document.createElement('div');
+  d.className = 'foto';
+  d.dataset.label = rotulo || 'Luizinho';
+
+  if(src){
+
+    const i = new Image();
+
+    i.alt = alt || rotulo || 'Imagem do restaurante Luizinho';
+    i.loading = 'lazy';
+    i.decoding = 'async';
+
+    i.onerror = () => {
+
+      if (fallbackSrc && !i.dataset.fallback) {
+        i.dataset.fallback = '1';
+        i.src = fallbackSrc;
+      } else {
+        d.classList.add('sem-imagem');
+        i.remove();
+      }
+
+    };
+
+    i.src = src;
+    d.appendChild(i);
+
+  } else {
+
+    d.classList.add('sem-imagem');
+
+  }
+
+  return d;
+}
+
+/* ---------- básicos */
+
+$('#ano').textContent = new Date().getFullYear();
+
+const frases = [
+  'Carne na brasa',
+  'Espetos e chopp',
+  'Pratos caseiros',
+  'Sobremesas',
+  'Almoço em família',
+  'Sorocaba'
+];
+
+$('#faixa').innerHTML = Array(2).fill(
+  frases.map(f=>`<span>${f}</span><span>✦</span>`).join('')
+).join('');
+
+if(CONFIG.fotoHero){
+  const h=$('#inicio');
+  h.classList.add('com-foto');
+  h.style.setProperty('--foto',`url("${CONFIG.fotoHero}")`);
+}
+
+{
+  const f=criaFoto(
+    CONFIG.fotoSobre,
+    'Ambiente Luizinho',
+    'Ambiente do restaurante Luizinho'
+  );
+
+  $('#foto-sobre').replaceWith(
+    Object.assign(f,{id:'foto-sobre'})
+  );
+}
+
+/* contato, mapa, links */
+
+const q = encodeURIComponent(CONFIG.endereco);
+const tel = '+55'+CONFIG.telefone.replace(/\D/g,'');
+
+$('#mapa').src = `https://www.google.com/maps?q=${q}&z=16&output=embed`;
+
+$('#btn-rota').href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+
+$$('[data-ligar]').forEach(a=>a.href='tel:'+tel);
+
+$('#end-texto').textContent = CONFIG.endereco;
+
+$('#tel-texto').innerHTML =
+  `<a href="tel:${tel}">${CONFIG.telefone}</a>`;
+
+$('#mail-texto').innerHTML =
+  `<a href="mailto:${CONFIG.email}">${CONFIG.email}</a>`;
+
+$('#redes').innerHTML =
+  `<a href="${CONFIG.instagram}" target="_blank" rel="noopener">Instagram</a>
+   <a href="${CONFIG.facebook}" target="_blank" rel="noopener">Facebook</a>`;
+
+$('#zap').href =
+  `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Gostaria de informações sobre o Luizinho.')}`;
+
+
+/* ---------- aberto / fechado agora */
+
+const agoraSP = () =>
+  new Date(new Date().toLocaleString('en-US',{
+    timeZone:'America/Sao_Paulo'
+  }));
+
+function calcStatus(){
+
+  const d=agoraSP();
+  const h=d.getHours()+d.getMinutes()/60;
+  const dia=d.getDay();
+  const hj=CONFIG.horarios[dia];
+
+  if(hj && h>=hj[0] && h<hj[1])
+    return {on:true, txt:'Aberto agora · fecha às '+fmt(hj[1])};
+
+  if(hj && h<hj[0])
+    return {on:false, txt:'Fechado · abre hoje às '+fmt(hj[0])};
+
+  for(let i=1;i<=7;i++){
+
+    const j=CONFIG.horarios[(dia+i)%7];
+
+    if(j)
+      return {
+        on:false,
+        txt:'Fechado · abre '+(i===1?'amanhã':DIAS[(dia+i)%7].toLowerCase())+' às '+fmt(j[0])
+      };
+
+  }
+
+  return {on:false, txt:'Fechado no momento'};
+}
+
+function pintaHorarios(){
+
+  const hoje = agoraSP().getDay();
+
+  $('#horarios').innerHTML = [1,2,3,4,5,6,0].map(i=>{
+
+    const j=CONFIG.horarios[i];
+
+    return `<tr class="${i===hoje?'hoje':''}">
+      <td>${DIAS[i]}</td>
+      <td>${j?fmt(j[0])+' às '+fmt(j[1]):'Fechado'}</td>
+    </tr>`;
+
+  }).join('');
+
+}
+
+function atualizaStatus(){
+
+  const s=calcStatus();
+
+  $$('[data-status]').forEach(el=>{
+
+    const mini = el.classList.contains('mini');
+
+    el.classList.remove('on','off');
+    el.classList.add(s.on?'on':'off');
+
+    $('span',el).textContent =
+      mini ? (s.on?'Aberto agora':'Fechado') : s.txt;
+
+    el.title = s.txt;
+
+  });
+
+  pintaHorarios();
+
+}
+atualizaStatus();
+setInterval(atualizaStatus,60000);
+
+/* horários do formulário (a cada 30 min dentro do funcionamento) */
+
+function opcoesHora(){
+
+  const dv = $('#data').value;
+  const sel=$('#hora');
+
+  sel.innerHTML='';
+
+  const dia = dv
+    ? new Date(dv+'T12:00:00').getDay()
+    : agoraSP().getDay();
+
+  const j = CONFIG.horarios[dia];
+
+  if(!j){
+    sel.innerHTML='<option value="">Fechado neste dia</option>';
+    return;
+  }
+
+  for(let t=j[0]; t<=j[1]-1; t+=.5){
+
+    const o=document.createElement('option');
+
+    o.textContent=fmt(t)
+      .replace('h',':')
+      .replace(/:$/,':00')
+      .replace(/^(\d):/,'0$1:');
+
+    sel.appendChild(o);
+
+  }
+
+}
+
+const dataEl=$('#data');
+const hojeSP = agoraSP();
+
+dataEl.min = [
+  hojeSP.getFullYear(),
+  String(hojeSP.getMonth()+1).padStart(2,'0'),
+  String(hojeSP.getDate()).padStart(2,'0')
+].join('-');
+
+dataEl.addEventListener('change',opcoesHora);
+opcoesHora();
+
+$('#form').addEventListener('submit',e=>{
+
+  e.preventDefault();
+
+  if(!$('#hora').value){
+    alert('O restaurante está fechado neste dia. Escolha outra data.');
+    return;
+  }
+
+  const [a,m,d]=dataEl.value.split('-');
+  const obs=$('#obs').value;
+
+  const msg=
+    `Olá! Quero reservar uma mesa no Luizinho.
+Nome: ${$('#nome').value}
+Data: ${d}/${m}/${a}
+Horário: ${$('#hora').value}
+Pessoas: ${$('#pessoas').value}`+
+    (obs?`\nObs: ${obs}`:'');
+
+  window.open(
+    `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`,
+    '_blank'
+  );
+
+});
+
+
+/* ---------- atalhos do hero */
+
+const CATS = {
+  pratos:'Pratos',
+  bebidas:'Bebidas',
+  sobremesas:'Sobremesas'
+};
+
+$('#atalhos').innerHTML='';
+
+Object.entries(CATS).forEach(([k,nome])=>{
+
+  const b=document.createElement('button');
+  b.className='atalho';
+  b.type='button';
+
+  b.appendChild(
+    Object.assign(
+      criaFoto(
+        CONFIG.fotosAtalhos[k],
+        nome,
+        'Imagem de '+nome.toLowerCase(),
+        CONFIG.fallbackFotos[k]
+      )
+    )
+  );
+
+  b.insertAdjacentHTML(
+    'beforeend',
+    `<div style="position:relative;z-index:3">
+      <small>${CONFIG.cardapio[k].length} opções</small>
+      <h3>${nome}</h3>
+    </div>`
+  );
+
+  b.addEventListener('click',()=>{
+    setCat(k);
+    $('#cardapio').scrollIntoView();
+  });
+
+  $('#atalhos').appendChild(b);
+
+});
+
+
+/* ---------- carrossel do cardápio */
+
+const pista=$('#pista');
+const ant=$('#ant');
+const prox=$('#prox');
+const barra=$('#barra-pista');
+
+function setCat(cat){
+
+  $$('.aba').forEach(a=>
+    a.setAttribute('aria-selected',a.dataset.cat===cat)
+  );
+
+  pista.innerHTML='';
+
+  CONFIG.cardapio[cat].forEach(it=>{
+
+    const c=document.createElement('article');
+    c.className='prato';
+
+    c.appendChild(
+      criaFoto(
+        it.f,
+        it.n,
+        it.n,
+        CONFIG.fallbackFotos[cat]
+      )
+    );
+
+    c.insertAdjacentHTML(
+      'beforeend',
+      `<div class="txt">
+        <h3>${it.n}</h3>
+        <p>${it.d}</p>
+        <span class="preco">${it.p}</span>
+      </div>`
+    );
+
+    pista.appendChild(c);
+
+  });
+
+  pista.scrollTo({left:0});
+  atualizaPista();
+
+}
+
+function atualizaPista(){
+
+  const max=pista.scrollWidth-pista.clientWidth;
+
+  ant.disabled = pista.scrollLeft<=4;
+  prox.disabled = pista.scrollLeft>=max-4;
+
+  const larg = max>0
+    ? pista.clientWidth/pista.scrollWidth*100
+    : 100;
+
+  barra.style.width=larg+'%';
+
+  barra.style.marginLeft = max>0
+    ? (pista.scrollLeft/max*(100-larg))+'%'
+    : '0';
+
+}
+
+const passo=()=>{
+  const c=pista.firstElementChild;
+  return c ? c.getBoundingClientRect().width+18 : 300;
+};
+
+ant.addEventListener('click',()=>{
+  pista.scrollBy({left:-passo(),behavior:'smooth'});
+});
+
+prox.addEventListener('click',()=>{
+  pista.scrollBy({left:passo(),behavior:'smooth'});
+});
+
+pista.addEventListener('scroll',atualizaPista,{passive:true});
+
+pista.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') prox.click();
+  if(e.key==='ArrowLeft') ant.click();
+});
+
+addEventListener('resize',atualizaPista);
+
+$$('.aba').forEach(a=>
+  a.addEventListener('click',()=>setCat(a.dataset.cat))
+);
+
+
+/* arrastar com o mouse */
+
+let down=false,sx=0,sl=0;
+
+pista.addEventListener('pointerdown',e=>{
+
+  if(e.pointerType!=='mouse') return;
+
+  down=true;
+  sx=e.clientX;
+  sl=pista.scrollLeft;
+
+  pista.classList.add('arrasta');
+
+});
+
+addEventListener('pointermove',e=>{
+  if(down) pista.scrollLeft = sl-(e.clientX-sx);
+});
+
+addEventListener('pointerup',()=>{
+  down=false;
+  pista.classList.remove('arrasta');
+});
+
+setCat('pratos');
+
+
+/* ---------- galeria + lightbox */
+
+CONFIG.galeria.forEach((src,i)=>{
+
+  const f=criaFoto(
+    src,
+    'Experiência Luizinho',
+    'Foto '+(i+1)+' da experiência Luizinho'
+  );
+
+  if(src){
+
+    f.classList.add('zoom');
+
+    f.addEventListener('click',()=>{
+
+      const imagem = $('#lightbox img');
+
+      imagem.src = src;
+      imagem.alt = 'Foto ampliada da experiência Luizinho';
+
+      $('#lightbox').classList.add('on');
+
+    });
+
+  }
+
+  $('#grade').appendChild(f);
+
+});
+
+const lb=$('#lightbox');
+
+lb.addEventListener('click',e=>{
+
+  if(e.target===lb || e.target.tagName==='BUTTON')
+    lb.classList.remove('on');
+
+});
+
+
+/* ---------- menu */
+
+const topo=$('#topo');
+const burger=$('#burger');
+const gaveta=$('#gaveta');
+
+function menu(abrir){
+
+  gaveta.classList.toggle('aberta',abrir);
+  burger.classList.toggle('x',abrir);
+
+  burger.setAttribute('aria-expanded',abrir);
+  gaveta.setAttribute('aria-hidden',!abrir);
+
+  document.body.classList.toggle('trava',abrir);
+
+}
+
+burger.addEventListener('click',()=>{
+  menu(!gaveta.classList.contains('aberta'));
+});
+
+$$('#gaveta a').forEach(a=>
+  a.addEventListener('click',()=>menu(false))
+);
+
+addEventListener('keydown',e=>{
+
+  if(e.key==='Escape'){
+    menu(false);
+    lb.classList.remove('on');
+  }
+
+});
+
+addEventListener('resize',()=>{
+  if(innerWidth>960) menu(false);
+});
+
+
+const prog=$('#progresso');
+
+function aoRolar(){
+
+  topo.classList.toggle('fixo',scrollY>30);
+
+  const max=document.documentElement.scrollHeight-innerHeight;
+
+  prog.style.width =
+    (max>0 ? scrollY/max*100 : 0)+'%';
+
+}
+
+addEventListener('scroll',aoRolar,{passive:true});
+aoRolar();
+
+
+/* destaca a seção atual no menu */
+
+const secs=[
+  'inicio',
+  'cardapio',
+  'quem-somos',
+  'galeria',
+  'contato'
+];
+
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+
+  if(en.isIntersecting){
+
+    $$('[data-sec]').forEach(a=>
+      a.classList.toggle(
+        'ativo',
+        a.dataset.sec===en.target.id
+      )
+    );
+
+  }
+
+}),{rootMargin:'-45% 0px -50% 0px'});
+
+secs.forEach(id=>
+  io.observe(document.getElementById(id))
+);
+
+
+/* ---------- brasas */
+
+(function(){
+
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)
+    return;
+
+  const c=$('#brasas');
+  const x=c.getContext('2d');
+
+  let w,h,p=[];
+
+  const ajusta=()=>{
+    w=c.width=c.offsetWidth;
+    h=c.height=c.offsetHeight;
+  };
+
+  ajusta();
+
+  addEventListener('resize',ajusta);
+
+  const nova=ini=>({
+
+    x:Math.random()*w,
+    y:ini?Math.random()*h:h+10,
+    r:Math.random()*2.6+.6,
+    v:Math.random()*.9+.35,
+    d:(Math.random()-.5)*.5,
+    a:Math.random()*.7+.3,
+    f:Math.random()*6.28
+
+  });
+
+  for(
+    let i=0;
+    i<Math.min(90,Math.floor(innerWidth/14));
+    i++
+  ){
+    p.push(nova(true));
+  }
+
+  (function loop(){
+
+    x.clearRect(0,0,w,h);
+
+    p.forEach((b,i)=>{
+
+      b.y-=b.v;
+      b.f+=.03;
+      b.x+=b.d+Math.sin(b.f)*.4;
+      b.a-=.0012;
+
+      if(b.y<-10||b.a<=0)
+        p[i]=nova(false);
+
+      x.beginPath();
+      x.arc(b.x,b.y,b.r,0,7);
+
+      x.fillStyle=
+        `rgba(242,${140+b.r*20|0},60,${b.a})`;
+
+      x.shadowColor='#ff7a30';
+      x.shadowBlur=10;
+
+      x.fill();
+
+    });
+
+    requestAnimationFrame(loop);
+
+  })();
+
+})();
+
+</script>
+
+</body>
+</html>
